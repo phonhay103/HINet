@@ -2,7 +2,6 @@
 */__pycache__
 */*/__pycache__
 */*/*/__pycache__
-datasets/SIDD/
+datasets/rain13k/
 experiments/
 results/
-.idea/

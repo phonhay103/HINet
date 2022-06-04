@@ -1,7 +1,8 @@
-.gitignore
 */__pycache__
 */*/__pycache__
 */*/*/__pycache__
-datasets/rain13k/
-experiments/
-results/
+
+datasets
+pretrained/*.pth
+results
+basicsr

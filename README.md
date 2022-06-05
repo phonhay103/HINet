@@ -1,7 +1,11 @@
 ## Pre-requisites
 The project was developed using python 3 with the following packages.
 - Pytorch
-- 
+- Opencv
+- Lmdb
+- SciPy
+- PyYAML
+- Scikit-image
 
 1. Install [Pytorch](https://pytorch.org/get-started/locally/)
 2. Install with pip:
@@ -18,16 +22,28 @@ pip install -r requirements.txt
 - Place it in `pretrained`
 
 ## Evaluation
+- Option: `options/test.yml`
++ For Single Image Dataset:
 ```
-python test.py
-```
-or
-```
-python test.py --weights <model_weights> --input_dir <input_path> --result_dir <result_path>
+datasets:
+    test:
+        type: SingleImageDataset
+        dataroot_lq: <img_path>
+    path:
+        pretrain_network_g: <model_path>
+
 ```
 
++ For Pair Image Dataset:
+```
+datasets:
+    test:
+        type: PairedImageDataset
+        dataroot_gt <input_path>
+        dataroot_lq: <target_path>
+    path:
+        pretrain_network_g: <model_path>
 
-<!--* train
+```
 
-    * ```python -m torch.distributed.launch --nproc_per_node=8 --master_port=4321 basicsr/train_rain.py -opt options/train/Rain13k/HINet.yml --launcher pytorch```
--->
+- Run: `python test.py -opt options/test.yml`

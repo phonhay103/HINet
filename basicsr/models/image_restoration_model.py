@@ -321,6 +321,8 @@ class ImageRestorationModel(BaseModel):
             if 'gt' in visuals:
                 gt_img = tensor2img([visuals['gt']], rgb2bgr=rgb2bgr)
                 del self.gt
+            else:
+                gt_img = None
 
             # tentative for out of GPU memory
             del self.lq
@@ -348,9 +350,10 @@ class ImageRestorationModel(BaseModel):
                         f'{img_name}_gt.png')
                     
                 imwrite(sr_img, save_img_path)
-                imwrite(gt_img, save_gt_img_path)
+                if gt_img is not None:
+                    imwrite(gt_img, save_gt_img_path)
 
-            if with_metrics:
+            if with_metrics and gt_img:
                 # calculate metrics
                 opt_metric = deepcopy(self.opt['val']['metrics'])
                 if use_image:

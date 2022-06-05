@@ -6,7 +6,7 @@
 # ------------------------------------------------------------------------
 import logging
 import torch
-from os import path as osp
+from pathlib import Path
 
 from basicsr.data import create_dataloader, create_dataset
 from basicsr.models import create_model
@@ -19,16 +19,15 @@ from basicsr.utils.options import dict2str
 def main():
     # parse options, set distributed setting, set ramdom seed
     opt = parse_options(is_train=False)
-
+ 
     torch.backends.cudnn.benchmark = True
     # torch.backends.cudnn.deterministic = True
 
     # mkdir and initialize loggers
     make_exp_dirs(opt)
-    log_file = osp.join(opt['path']['log'],
-                        f"test_{opt['name']}_{get_time_str()}.log")
-    logger = get_root_logger(
-        logger_name='basicsr', log_level=logging.INFO, log_file=log_file)
+    log_file = Path(opt['path']['log'], f"test_{opt['name']}_{get_time_str()}.log").as_posix()
+
+    logger = get_root_logger(logger_name='basicsr', log_level=logging.INFO, log_file=log_file)
     logger.info(get_env_info())
     logger.info(dict2str(opt))
 
@@ -43,8 +42,7 @@ def main():
             dist=opt['dist'],
             sampler=None,
             seed=opt['manual_seed'])
-        logger.info(
-            f"Number of test images in {dataset_opt['name']}: {len(test_set)}")
+        logger.info(f"Number of test images in {dataset_opt['name']}: {len(test_set)}")
         test_loaders.append(test_loader)
 
     # create model
@@ -64,5 +62,5 @@ def main():
             rgb2bgr=rgb2bgr, use_image=use_image)
 
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()

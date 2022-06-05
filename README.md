@@ -39,8 +39,8 @@ datasets:
 datasets:
     test:
         type: PairedImageDataset
-        dataroot_gt <input_path>
-        dataroot_lq: <target_path>
+        dataroot_gt <target_path>
+        dataroot_lq: <input_path>
     path:
         pretrain_network_g: <model_path>
 

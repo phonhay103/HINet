@@ -3,6 +3,5 @@
 */*/*/__pycache__
 
 datasets
-pretrained/*.pth
+pretrained
 results
-basicsr
